@@ -17,13 +17,13 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|center_horizontal"
         android:orientation="horizontal"
-        android:background="#2196F3"
         android:weightSum="1">
 
         <Button android:id="@+id/buttonSignIn" style="?metaButtonBarButtonStyle"
             android:layout_width="wrap_content" android:layout_height="67dp"
             android:text="Back"
             android:onClick="BackPressed"
+            android:layout_margin="5dp"
             android:background="@drawable/border"
             android:textColor="#ffffff"
             android:layout_weight="0.50" />
@@ -33,6 +33,7 @@
             android:text="Next"
             android:onClick="Next"
             android:layout_weight="0.5"
+            android:layout_margin="5dp"
             android:background="@drawable/border"
             android:textColor="#ffffff" />
 

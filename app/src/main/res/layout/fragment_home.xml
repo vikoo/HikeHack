@@ -49,10 +49,12 @@
             android:background="#FFFFFF" />
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
+            android:layout_marginLeft="@dimen/drawer_margin"
+            android:layout_marginRight="@dimen/drawer_margin"
             android:layout_weight="0.26">
 
             <Button
@@ -61,10 +63,9 @@
                 android:text="Reach out to People!"
                 android:id="@+id/buttonNewRequest"
                 style="@style/button_text"
+
                 android:background="@drawable/styled_button"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                 />
 
         </RelativeLayout>
 

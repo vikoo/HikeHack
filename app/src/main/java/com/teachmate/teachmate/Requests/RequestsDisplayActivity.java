@@ -28,15 +28,12 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.teachmate.teachmate.CommonMethods;
 import com.teachmate.teachmate.DBHandlers.RequestsDBHandler;
 import com.teachmate.teachmate.FragmentTitles;
 import com.teachmate.teachmate.MainActivity;
 import com.teachmate.teachmate.R;
 import com.teachmate.teachmate.TempDataClass;
-
 import com.teachmate.teachmate.models.Requests;
-
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -47,9 +44,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -140,15 +135,15 @@ public class RequestsDisplayActivity extends Fragment {
             progressDialog.show();
 
 
-            if(new CommonMethods().hasActiveInternetConnection(activity)){
+//            if(new CommonMethods().hasActiveInternetConnection(activity)){
                 HttpGetter getter = new HttpGetter();
                 getter.execute("http://teach-mate.azurewebsites.net/Request/GetAllRequestsAssigned?id=" + TempDataClass.serverUserId + "&lastRequestId=0");
-            }
-            else{
-                progressDialog.dismiss();
-                listViewRequests.setVisibility(View.INVISIBLE);
-                connectionLostLayout.setVisibility(View.VISIBLE);
-            }
+//            }
+//            else{
+//                progressDialog.dismiss();
+//                listViewRequests.setVisibility(View.INVISIBLE);
+//                connectionLostLayout.setVisibility(View.VISIBLE);
+//            }
         }else{
             isFromOnResume = false;
         }

@@ -4,13 +4,15 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:layout_margin="10dp"
+    android:layout_gravity="center">
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Request : "
+        android:layout_gravity="center_horizontal"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#ff000000" />
 
@@ -19,7 +21,7 @@
         android:background="@drawable/rounded_edit_text"
         android:layout_width="fill_parent"
         android:layout_height="35dp"
-        android:layout_margin="5dp"
+        android:layout_margin="20dp"
         android:textColor="#ff000000"
         android:textSize="20dp"
         android:padding="5dp">
@@ -52,8 +54,11 @@
     <Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
         android:text="Target Users in Current Location :"
-        android:id="@+id/switch1" />
+        android:id="@+id/switch1"
+        android:checked="false" />
 
 
 </LinearLayout>

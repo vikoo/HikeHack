@@ -31,10 +31,10 @@
         android:textColor="#040404"
         android:typeface="sans"
         android:textSize="17dip"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
         android:textStyle="bold"
-        android:layout_above="@+id/textViewRequestString"
         android:layout_toRightOf="@+id/thumbnail"
-        android:layout_toEndOf="@+id/thumbnail"
         android:singleLine="true" />
 
     <!-- Artist Name -->
@@ -44,12 +44,10 @@
         android:layout_height="wrap_content"
         android:textColor="#343434"
         android:textSize="12dip"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/textViewRequestUserName"
         android:text="Just gona stand there and ..."
-        android:layout_alignBottom="@+id/thumbnail"
-        android:layout_alignRight="@+id/textViewTime"
-        android:layout_alignEnd="@+id/textViewTime"
         android:layout_toRightOf="@+id/thumbnail"
-        android:layout_toEndOf="@+id/thumbnail"
         android:singleLine="true" />
 
     <!-- Rightend Duration -->
@@ -62,13 +60,13 @@
         android:text="5:45"
         android:textSize="10dip"
         android:textStyle="bold"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+         />
 
     <!-- Rightend Arrow -->
-    <ImageView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView android:layout_width="10dp"
+        android:layout_height="10dp"
         android:src="@drawable/arrow"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
