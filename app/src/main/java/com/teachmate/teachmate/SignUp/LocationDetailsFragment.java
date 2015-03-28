@@ -37,6 +37,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
@@ -88,6 +91,8 @@ public class LocationDetailsFragment extends Fragment implements onNextPressed{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_location_details, container, false);
+
+        userData = new UserModel();
 
         editTextAddress1 = (EditText) layout.findViewById(R.id.editTextAddress1);
         editTextPinCode1 = (EditText) layout.findViewById(R.id.editTextPinCode1);
@@ -443,9 +448,10 @@ public class LocationDetailsFragment extends Fragment implements onNextPressed{
                     TempDataClass.userProfession = NewSignUpActicity.userModel.Profession;
                     TempDataClass.serverUserId = result;
 
+                    NewSignUpActicity.userModel.ServerUserId = result;
                     userData.ServerUserId = result;
 
-                    UserModelDBHandler.InsertProfile(getActivity().getApplicationContext(), userData);
+                    UserModelDBHandler.InsertProfile(getActivity().getApplicationContext(), NewSignUpActicity.userModel);
 
                     HttpPostRegIdToServer regIdPost = new HttpPostRegIdToServer();
                     regIdPost.execute("http://teach-mate.azurewebsites.net/User/UpdateRegId");
@@ -489,8 +495,10 @@ public class LocationDetailsFragment extends Fragment implements onNextPressed{
         InputStream inputStream = null;
         String result = "";
         try {
-
-            HttpClient httpclient = new DefaultHttpClient();
+            HttpParams params = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(params, 100000);
+            HttpConnectionParams.setSoTimeout(params, 100000);
+            HttpClient httpclient = new DefaultHttpClient(params);
             HttpPost httpPost = new HttpPost(url);
             String json = "";
             JSONObject jsonObject = new JSONObject();
@@ -571,7 +579,7 @@ public class LocationDetailsFragment extends Fragment implements onNextPressed{
             HttpPost httpPost = new HttpPost(url);
             String json = "";
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("Id", userData.ServerUserId);
+            jsonObject.put("Id", NewSignUpActicity.userModel.ServerUserId);
             jsonObject.put("RegistrationId", TempDataClass.deviceRegId);
             json = jsonObject.toString();
             StringEntity se = new StringEntity(json);

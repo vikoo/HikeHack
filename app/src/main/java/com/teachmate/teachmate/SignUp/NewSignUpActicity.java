@@ -66,7 +66,7 @@ public class NewSignUpActicity extends ActionBarActivity {
     }
 
     public void startMainActivity(){
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
 
         finish();
