@@ -32,6 +32,14 @@ public class DeviceInfoDBHandler {
         }
     }
 
+    public static void InsertOrUpdate(Context context, DeviceInfoModel deviceInfoModel){
+        try{
+
+        }catch(Exception e){
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public static String GetValueForKey(Context context, String key){
 
         try {

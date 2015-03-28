@@ -181,8 +181,10 @@ public class MainActivity extends ActionBarActivity
             case 3:
                 initialFragment = new PreviousChatFragment();
                 break;
-
             case 4:
+                initialFragment = new SettingsFragment();
+                break;
+            case 5:
                 initialFragment = new AboutFragment();
                 break;
             default:
@@ -228,6 +230,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case FragmentTitles.UPDATE_PROFILE:
                 mTitle = FragmentTitles.UPDATE_PROFILE;
+                break;
+            case FragmentTitles.SETTINGS:
+                mTitle = FragmentTitles.SETTINGS;
                 break;
 
         }

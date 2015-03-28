@@ -18,5 +18,6 @@ public class FragmentTitles {
     public static final String CHANGE_PASSWORD = "Change Password";
     public static final String UPDATE_PROFILE = "Update Your Profile";
     public static final String NEW_QUESTION = "New Question";
+    public static final String SETTINGS = "Settings";
     public static final String SAVED_QUESTIONS = "Saved Questions";
 }
