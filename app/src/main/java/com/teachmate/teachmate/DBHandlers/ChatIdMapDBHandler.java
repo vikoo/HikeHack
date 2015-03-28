@@ -119,4 +119,31 @@ public class ChatIdMapDBHandler {
         }
         return null;
     }
+
+    public static String chattingWithId(Context context, String chatId) {
+
+        try {
+            dbHelper = new DbHelper(context.getApplicationContext());
+            db = dbHelper.getWritableDatabase();
+
+            Cursor c = db.rawQuery("Select * from " + DbTableStrings.TABLE_NAME_CHAT_ID_MAPPING
+                    + " where " + DbTableStrings.CHATID + " = '" + chatId + "'", null);
+            if (c != null) {
+                if (c.moveToFirst()) {
+                    String name = c.getString(c.getColumnIndex(DbTableStrings.USERID));
+                    return name;
+                }
+            }
+            else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            Log.e("ChatIdMapDBHandler", e.getMessage());
+            return null;
+        } finally {
+            db.close();
+        }
+        return null;
+    }
 }
