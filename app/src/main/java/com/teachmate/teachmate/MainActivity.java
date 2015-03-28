@@ -1,19 +1,26 @@
 package com.teachmate.teachmate;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.teachmate.teachmate.Chat.ChatXMPPService;
+import com.teachmate.teachmate.Chat.LocalXMPPBinder;
 import com.teachmate.teachmate.Chat.PreviousChatFragment;
 import com.teachmate.teachmate.DBHandlers.DeviceInfoDBHandler;
 import com.teachmate.teachmate.DBHandlers.UserModelDBHandler;
@@ -135,6 +142,11 @@ public class MainActivity extends ActionBarActivity
         if (isThroughNotification) {
             replaceFragment();
             isThroughNotification = false;
+        }
+
+        // start xmpp service
+        if(!ChatXMPPService.isRunning) {
+            doBindService();
         }
     }
 
@@ -347,5 +359,29 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.CloseDrawer();
     }
 
+    private boolean mBounded;
+    private ChatXMPPService mService;
+    private static String TAG = "MainActivity";
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
+        @SuppressWarnings("unchecked")
+
+        public void onServiceConnected(final ComponentName name, final IBinder service) {
+            mService = ((LocalXMPPBinder<ChatXMPPService>) service).getService();
+            mBounded = true;
+            Log.d(TAG, "hack onServiceConnected");
+        }
+
+
+        public void onServiceDisconnected(final ComponentName name) {
+            mService = null;
+            mBounded = false;
+            Log.d(TAG, "hack onServiceDisconnected");
+        }
+    };
+
+    void doBindService() {
+        startService(new Intent(getApplication(), ChatXMPPService.class));
+//        bindService(new Intent(this, ChatXMPPService.class), mConnection, Context.BIND_AUTO_CREATE);
+    }
 }

@@ -1,12 +1,11 @@
 
 package com.teachmate.teachmate.Chat;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
@@ -32,6 +31,11 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.jivesoftware.smack.SmackException;
+import org.jivesoftware.smack.chat.Chat;
+import org.jivesoftware.smack.chat.ChatManager;
+import org.jivesoftware.smack.chat.ChatMessageListener;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -46,6 +50,8 @@ import java.util.List;
 
 public class ChatActivity extends ActionBarActivity {
 
+    public static final int MESSAGE_WRITE = 1;
+    private static String TAG = "ChatActivity";
     ArrayList<Message> messages;
     ChatAdapter adapter;
     EditText text;
@@ -58,34 +64,34 @@ public class ChatActivity extends ActionBarActivity {
     public static final int CHAT_NOTIFICATION = 5;
     ListView chatMessages;
     IntentFilter intentFilter;
+    private String receiverGuy;
 
 
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String newMessage = "";
-            String messageFrom = "";
-            Bundle bundle = intent.getExtras();
-            if (bundle != null && bundle.containsKey("Message")) {
-                newMessage = bundle.getString("Message");
-            }
-            if (bundle != null && bundle.containsKey("UserName")) {
-                messageFrom = bundle.getString("UserName");
-            }
-            if (messageFrom.equalsIgnoreCase(receivedFrom)) {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date date = new Date();
-                time = dateFormat.format(date);
-                time = time.substring(11, time.lastIndexOf(':'));
-                text.setText("");
-                addNewMessage(new Message(newMessage, false, time));
-                TempDataClass.alreadyAdded = true;
-            }
-
-        }
-    };
-
+//    private BroadcastReceiver receiver = new BroadcastReceiver() {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            String newMessage = "";
+//            String messageFrom = "";
+//            Bundle bundle = intent.getExtras();
+//            if (bundle != null && bundle.containsKey("Message")) {
+//                newMessage = bundle.getString("Message");
+//            }
+//            if (bundle != null && bundle.containsKey("UserName")) {
+//                messageFrom = bundle.getString("UserName");
+//            }
+//            if (messageFrom.equalsIgnoreCase(receivedFrom)) {
+//                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                Date date = new Date();
+//                time = dateFormat.format(date);
+//                time = time.substring(11, time.lastIndexOf(':'));
+//                text.setText("");
+//                addNewMessage(new Message(newMessage, false, time));
+//                TempDataClass.alreadyAdded = true;
+//            }
+//
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,14 +126,16 @@ public class ChatActivity extends ActionBarActivity {
         if (bundle != null && bundle.containsKey("previousConversation")) {
             chatId = bundle.getString("previousConversation");
         }
-
+        // fetching receiver id
+        receiverGuy = ChatIdMapDBHandler.chattingWithId(getApplicationContext(),chatId);
+        ChatXMPPService.setHandler(mHandler,receiverGuy);
         text = (EditText) this.findViewById(R.id.text);
         send = (Button) this.findViewById(R.id.send_button);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newMessage = text.getText().toString().trim();
+                final String newMessage = text.getText().toString().trim();
                 if (!TextUtils.isEmpty(newMessage)) {
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date date = new Date();
@@ -136,8 +144,18 @@ public class ChatActivity extends ActionBarActivity {
                     text.setText("");
                     addNewMessage(new Message(newMessage, sentBy, time));
                     // sentBy = !sentBy;
-                    new SendMessage().execute("http://teach-mate.azurewebsites.net/Chat/ChatMsg",
-                            newMessage);
+                    // sends the notification to hte other user
+//                    new SendMessage().execute("http://teach-mate.azurewebsites.net/Chat/ChatMsg",
+//                            newMessage);
+                    // sending xmpp message
+                    if(chat != null){
+                        try {
+                            chat.sendMessage(createMessage(newMessage));
+                            Log.i(TAG,"hack sent:"+newMessage);
+                        } catch (SmackException.NotConnectedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
         });
@@ -156,13 +174,20 @@ public class ChatActivity extends ActionBarActivity {
         adapter = new ChatAdapter(this, messages);
         chatMessages.setAdapter(adapter);
 
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                establishXMPP();
+                return null;
+            }
+        }.execute();
 
-    }
 
-    @Override
-    protected void onPause() {
+
+    }  @Override
+       protected void onPause() {
         super.onPause();
-        unregisterReceiver(receiver);
+//        unregisterReceiver(receiver);
     }
 
     @Override
@@ -170,7 +195,7 @@ public class ChatActivity extends ActionBarActivity {
         super.onResume();
         intentFilter = new IntentFilter();
         intentFilter.addAction("com.google.android.c2dm.intent.RECEIVE");
-        registerReceiver(receiver, new IntentFilter(intentFilter));
+//        registerReceiver(receiver, new IntentFilter(intentFilter));
         adapter.notifyDataSetChanged();
     }
 
@@ -281,4 +306,77 @@ public class ChatActivity extends ActionBarActivity {
         actionBar.setCustomView(header, layout);
 
     }
+
+    private Chat chat;
+
+    private void establishXMPP() {
+        try {
+            chat = ChatManager.getInstanceFor(ChatXMPPService.connection).createChat(receiverGuy + "@hackathon.hike.in", new ChatMessageListener() {
+                @Override
+                public void processMessage(Chat chat, org.jivesoftware.smack.packet.Message message) {
+                    System.out.println("hack Received message: " + message);
+                }
+            });
+            if (chat != null) {
+                chat.addMessageListener(new ChatMessageListener() {
+                    @Override
+                    public void processMessage(Chat chat, org.jivesoftware.smack.packet.Message message) {
+
+                        System.out.println("hack received message from: " + chat.getParticipant() + "  message" + message);
+                    }
+                });
+            }
+        } catch (Exception s) {
+            s.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        ChatXMPPService.setHandler(null,null);
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        ChatXMPPService.setHandler(null,null);
+        super.onDestroy();
+    }
+
+    private String createMessage(String message){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("ChatId", chatId);
+            jsonObject.put("Message", message);
+            jsonObject.put("SenderId", TempDataClass.serverUserId);
+            jsonObject.put("userName", TempDataClass.userName);
+            jsonObject.put("SentOn", time);
+
+            return jsonObject.toString();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case MESSAGE_WRITE:
+                    byte[] writeBuf = (byte[]) msg.obj;
+                    // construct a string from the buffer
+                    String newMessage = new String(writeBuf);
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date();
+                    time = dateFormat.format(date);
+                    time = time.substring(11, time.lastIndexOf(':'));
+                    text.setText("");
+                    addNewMessage(new Message(newMessage, false, time));
+                    TempDataClass.alreadyAdded = true;
+                    break;
+            }
+        }
+    };
 }

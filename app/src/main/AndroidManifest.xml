@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
 
     <permission
         android:name="com.example.gcm.permission.C2D_MESSAGE"
@@ -73,6 +74,10 @@
             android:name=".SignUp.NewSignUpActicity"
             android:label="@string/title_activity_sign_up_acticity" >
         </activity>
+
+        <service android:name=".Chat.ChatXMPPService"/>
+
+
     </application>
 
 </manifest>

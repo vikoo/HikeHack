@@ -34,4 +34,6 @@ public class TempDataClass {
     public static boolean alreadyAdded = false;
 
     public static boolean newSignUpProfilePhotoReturn = false;
+
+    public static final String PASSWORD = "123";
 }

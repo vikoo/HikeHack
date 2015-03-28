@@ -156,7 +156,6 @@ public class LoginActivity extends Activity {
         protected void onPostExecute(String result) {
             //Toast.makeText(getBaseContext(), "Data Sent! -" + result.toString(), Toast.LENGTH_LONG).show();
             convertJsonToObject(result);
-
             HttpGetAllGeneratedRequests requests = new HttpGetAllGeneratedRequests();
             requests.execute("http://teach-mate.azurewebsites.net/Request/GetRequestsByUser?id=" + TempDataClass.serverUserId);
 
@@ -385,5 +384,4 @@ public class LoginActivity extends Activity {
             return null;
         }
     }
-
 }

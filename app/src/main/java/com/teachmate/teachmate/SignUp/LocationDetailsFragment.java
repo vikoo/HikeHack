@@ -1,7 +1,6 @@
 package com.teachmate.teachmate.SignUp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 import com.teachmate.teachmate.Base64;
 import com.teachmate.teachmate.DBHandlers.DeviceInfoDBHandler;
 import com.teachmate.teachmate.DBHandlers.UserModelDBHandler;
-import com.teachmate.teachmate.MainActivity;
 import com.teachmate.teachmate.R;
 import com.teachmate.teachmate.TempDataClass;
 import com.teachmate.teachmate.models.DeviceInfoKeys;
@@ -41,6 +39,11 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
+import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.SmackException;
+import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.tcp.XMPPTCPConnection;
+import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -448,6 +451,15 @@ public class LocationDetailsFragment extends Fragment implements onNextPressed{
                     TempDataClass.userProfession = NewSignUpActicity.userModel.Profession;
                     TempDataClass.serverUserId = result;
 
+                    // register the user to xmpp
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... params) {
+                            registerUserToXmpp();
+                            return null;
+                        }
+                    }.execute();
+
                     NewSignUpActicity.userModel.ServerUserId = result;
                     userData.ServerUserId = result;
 
@@ -488,6 +500,44 @@ public class LocationDetailsFragment extends Fragment implements onNextPressed{
                 ((NewSignUpActicity)getActivity()).dismissProgressDialog();
                 Toast.makeText(getActivity().getApplicationContext(), "Registration Failed. Please try Again.", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void registerUserToXmpp(){
+        System.out.println("registerUser ...");
+        try
+        {
+            XMPPTCPConnectionConfiguration.Builder conf = XMPPTCPConnectionConfiguration.builder().allowEmptyOrNullUsernames();
+            conf.setHost("hackathon.hike.in");
+            conf.setPort(8282);
+            conf.setServiceName("hackathon.hike.in");
+            conf.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
+            XMPPTCPConnection connection = new XMPPTCPConnection(conf.build());
+
+            connection.connect();
+            System.out.println("hack connected");
+
+            org.jivesoftware.smackx.iqregister.AccountManager am = org.jivesoftware.smackx.iqregister.AccountManager.getInstance(connection);
+            am.sensitiveOperationOverInsecureConnection(true);
+
+            System.out.println("hack is account creation allowed: " + am.supportsAccountCreation());
+
+            am.createAccount(TempDataClass.serverUserId, TempDataClass.PASSWORD);
+
+            System.out.println("hack disconnecting ...");
+            connection.disconnect();
+        }
+        catch (XMPPException e)
+        {
+            e.printStackTrace();
+        }
+        catch (SmackException s)
+        {
+            s.printStackTrace();
+        }
+        catch (IOException i)
+        {
+            i.printStackTrace();
         }
     }
 
