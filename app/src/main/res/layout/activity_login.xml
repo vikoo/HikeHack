@@ -24,7 +24,7 @@
 
             <Button android:id="@+id/buttonSignIn" style="?metaButtonBarButtonStyle"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
-                android:text="@string/SignIn"
+                android:text="SIGN IN"
                 android:layout_weight="0.5"
                 android:background="#2196F3"
                 android:onClick="AuthenticateUser"
@@ -32,7 +32,7 @@
 
             <Button android:id="@+id/buttonSignUp" style="?metaButtonBarButtonStyle"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
-                android:text="SignUp"
+                android:text="SIGN UP"
                 android:background="#2196F3"
                 android:onClick="SignUpAction"
                 android:textColor="#ffffff"
