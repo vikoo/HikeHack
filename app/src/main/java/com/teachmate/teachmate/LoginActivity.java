@@ -79,7 +79,6 @@ public class LoginActivity extends Activity {
     public void SignUpAction(View v){
         Intent i = new Intent(this, NewSignUpActicity.class);
         startActivity(i);
-        finish();
     }
 
     public void AuthenticateUser(View v){

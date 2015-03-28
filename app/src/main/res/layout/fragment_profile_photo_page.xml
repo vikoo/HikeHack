@@ -19,7 +19,7 @@
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/imageView9"
+                android:id="@+id/imageViewNewProfilePhoto"
                 android:src="@drawable/user_icon"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
@@ -40,7 +40,7 @@
                 android:background="@drawable/styled_button"
                 android:text="Upload Image"
                 style="@style/button_text"
-                android:id="@+id/buttonUploadImage"
+                android:id="@+id/buttonNewUploadImage"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"

@@ -25,9 +25,13 @@ public class TempDataClass {
 
     public static Stack<Fragment> fragmentStack = new Stack<Fragment>();
 
+    public static Stack<Fragment> signUpStack = new Stack<>();
+
     public static boolean isThroughSplash = false;
 
     public static String profilePhotoLocalPath = "";
     public static String profilePhotoServerPath = "";
     public static boolean alreadyAdded = false;
+
+    public static boolean newSignUpProfilePhotoReturn = false;
 }

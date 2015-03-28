@@ -15,4 +15,7 @@ public class UserModel {
     public String PinCode1 = "";
     public String Address2 = "";
     public String PinCode2 = "";
+
+    public String password = "";
+    public String profilePhotoLocalPath = "";
 }
