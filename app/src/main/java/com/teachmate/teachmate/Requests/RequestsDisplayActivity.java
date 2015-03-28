@@ -34,9 +34,9 @@ import com.teachmate.teachmate.FragmentTitles;
 import com.teachmate.teachmate.MainActivity;
 import com.teachmate.teachmate.R;
 import com.teachmate.teachmate.TempDataClass;
-import com.teachmate.teachmate.models.Question_Model;
+
 import com.teachmate.teachmate.models.Requests;
-import com.teachmate.teachmate.questions.Question_Adapter;
+
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

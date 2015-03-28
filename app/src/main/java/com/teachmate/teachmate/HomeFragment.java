@@ -29,13 +29,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.teachmate.teachmate.DBHandlers.QuestionModelDBHandler;
 import com.teachmate.teachmate.DBHandlers.RequestsDBHandler;
 import com.teachmate.teachmate.Requests.MyRequests;
 import com.teachmate.teachmate.models.CategoryList;
-import com.teachmate.teachmate.models.Question_Model;
 import com.teachmate.teachmate.models.Requests;
-import com.teachmate.teachmate.questions.Ask_question;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -56,7 +53,7 @@ import java.util.Date;
 
 public class HomeFragment extends Fragment {
     ArrayList<String> myquestionids = new ArrayList<String>();
-    Question_Model myquestionsdb = new Question_Model();
+  //  Question_Model myquestionsdb = new Question_Model();
     public String created_time;
     public String questionmessage;
     public String result;
@@ -110,13 +107,13 @@ public class HomeFragment extends Fragment {
         }
 
         buttonNewRequest = (Button) layout.findViewById(R.id.buttonNewRequest);
-        buttonNewQuestion = (Button) layout.findViewById(R.id.buttonNewQuestion);
+       /* buttonNewQuestion = (Button) layout.findViewById(R.id.buttonNewQuestion);
         buttonNewQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 generatenewquestion();
             }
-        });
+        });*/
 
         newRequest = new Requests();
 
@@ -134,7 +131,7 @@ public class HomeFragment extends Fragment {
         return layout;
     }
 
-    public void generatenewquestion(){
+    /*public void generatenewquestion(){
         LayoutInflater factory = LayoutInflater.from(getActivity());
         final View promptview = factory.inflate(
                 R.layout.ask_question_dialogue, null);
@@ -191,7 +188,7 @@ public class HomeFragment extends Fragment {
         alertDialog.show();
 
     }
-
+*/
     @Override
     public void onAttach(Activity activity) {
 
@@ -383,7 +380,7 @@ public class HomeFragment extends Fragment {
         inputStream.close();
         return result;
     }
-    public class ask_question_async extends AsyncTask<String,Void,String> {
+    /*public class ask_question_async extends AsyncTask<String,Void,String> {
         ProgressDialog dialog = new ProgressDialog(getActivity());
 
         @Override
@@ -478,5 +475,5 @@ public class HomeFragment extends Fragment {
         Toast.makeText(getActivity(),"Question Posted Successfully",Toast.LENGTH_SHORT).show();
 
     }
-
+*/
 }

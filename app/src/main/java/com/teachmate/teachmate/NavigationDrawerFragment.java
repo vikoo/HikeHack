@@ -118,36 +118,32 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section3),
                 }));
 */
-        NsItemModel[] model = new NsItemModel[7];
+        NsItemModel[] model = new NsItemModel[5];
 
         NsItemModel home = new NsItemModel();
         home.title = "Home";
         home.counter = 0;
         model[0] = home;
+
         NsItemModel itemRequests = new NsItemModel();
         itemRequests.title = "Requests";
         itemRequests.counter = 0;
         model[1] = itemRequests;
+
         NsItemModel itemMyRequests = new NsItemModel();
         itemMyRequests.title = "My Requests";
         itemMyRequests.counter = 0;
         model[2] = itemMyRequests;
+
         NsItemModel chat = new NsItemModel();
         chat.title = "Chat";
         chat.counter = 0;
-        model[5] = chat;
-        NsItemModel question_feed = new NsItemModel();
-        question_feed.title = "Questions";
-        question_feed.counter = 0;
-        model[3] = question_feed;
-        NsItemModel my_questions = new NsItemModel();
-        my_questions.title = "My Questions";
-        my_questions.counter = 0;
-        model[4] = my_questions;
+        model[3] = chat;
+
         NsItemModel about = new NsItemModel();
         about.title = "About";
         about.counter = 0;
-        model[6] = about;
+        model[4] = about;
 
 
         ListAdapter adapter = new NsMenuAdapter(getActivity().getApplicationContext(), model);
