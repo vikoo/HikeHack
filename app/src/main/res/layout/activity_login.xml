@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:background="#ff026b6c"
+    android:layout_height="match_parent" android:background="#ffffff"
+
     tools:context="com.teachmate.teachmate.LoginActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -25,16 +26,16 @@
                 android:layout_width="wrap_content" android:layout_height="match_parent"
                 android:text="@string/SignIn"
                 android:layout_weight="0.5"
-                android:background="@drawable/border"
+                android:background="#2196F3"
                 android:onClick="AuthenticateUser"
-                android:textColor="#ff026b6c" />
+                android:textColor="#ffffff" />
 
             <Button android:id="@+id/buttonSignUp" style="?metaButtonBarButtonStyle"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
                 android:text="SignUp"
-                android:background="@drawable/border"
+                android:background="#2196F3"
                 android:onClick="SignUpAction"
-                android:textColor="#ff026b6c"
+                android:textColor="#ffffff"
                 android:layout_weight="0.5" />
 
         </LinearLayout>
@@ -80,10 +81,9 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView2"
-                android:src="@drawable/logo"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp" />
+                android:src="@drawable/hike"
+                android:layout_above="@+id/editTextLoginEmail"
+                android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
 

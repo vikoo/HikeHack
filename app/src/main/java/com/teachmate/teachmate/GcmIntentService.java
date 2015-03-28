@@ -166,7 +166,7 @@ public class GcmIntentService extends IntentService {
     private void sendNotification(String msg) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo_notif);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.hike);
 
 
         if (intType == 2) {
@@ -187,7 +187,7 @@ public class GcmIntentService extends IntentService {
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.logo_notif)
+                            .setSmallIcon(R.drawable.losobo_notif)
                             .setLargeIcon(bitmap)
                             .setContentTitle("New Answer")
                             .setStyle(new NotificationCompat.BigTextStyle()
@@ -207,7 +207,7 @@ public class GcmIntentService extends IntentService {
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.logo_notif)
+                            .setSmallIcon(R.drawable.losobo_notif)
                             .setLargeIcon(bitmap)
                             .setContentTitle("New Request")
                             .setStyle(new NotificationCompat.BigTextStyle()
@@ -233,7 +233,7 @@ public class GcmIntentService extends IntentService {
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.logo_notif)
+                            .setSmallIcon(R.drawable.losobo_notif)
                             .setContentTitle("New Response")
                             .setLargeIcon(bitmap)
                             .setStyle(new NotificationCompat.BigTextStyle()
@@ -282,7 +282,7 @@ public class GcmIntentService extends IntentService {
 
             Notification mBuilder =
                     new NotificationCompat.Builder(getApplicationContext())
-                            .setSmallIcon(R.drawable.logo_notif)
+                            .setSmallIcon(R.drawable.losobo_notif)
                             .setLargeIcon(bitmap)
                             .setContentTitle("Chat Notification")
                             .setContentIntent(pendingIntent)

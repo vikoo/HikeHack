@@ -341,6 +341,12 @@ public class HomeFragment extends Fragment {
         return result;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        ((MainActivity) getActivity()).setTitle(FragmentTitles.HOME);
+    }
+
     private class HttpAsyncTaskPOST extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {

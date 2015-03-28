@@ -213,12 +213,7 @@ public class MainActivity extends ActionBarActivity
             case FragmentTitles.TEACH_MATE:
                 mTitle = FragmentTitles.TEACH_MATE;
                 break;
-            case FragmentTitles.QUESTIONS_FEED:
-                mTitle = FragmentTitles.QUESTIONS_FEED;
-                break;
-            case FragmentTitles.MY_QUESTIONS:
-                mTitle = FragmentTitles.MY_QUESTIONS;
-                break;
+
             case FragmentTitles.ABOUT:
                 mTitle = FragmentTitles.ABOUT;
                 break;
@@ -234,9 +229,7 @@ public class MainActivity extends ActionBarActivity
             case FragmentTitles.UPDATE_PROFILE:
                 mTitle = FragmentTitles.UPDATE_PROFILE;
                 break;
-            case FragmentTitles.NEW_QUESTION:
-                mTitle = FragmentTitles.NEW_QUESTION;
-                break;
+
         }
     }
 
@@ -254,7 +247,7 @@ public class MainActivity extends ActionBarActivity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
+           // getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
             return true;
         }

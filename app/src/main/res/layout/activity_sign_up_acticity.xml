@@ -17,7 +17,7 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|center_horizontal"
         android:orientation="horizontal"
-        android:background="#ffffffff"
+        android:background="#2196F3"
         android:weightSum="1">
 
         <Button android:id="@+id/buttonSignIn" style="?metaButtonBarButtonStyle"
@@ -25,7 +25,7 @@
             android:text="Back"
             android:onClick="BackPressed"
             android:background="@drawable/border"
-            android:textColor="#ff026b6c"
+            android:textColor="#ffffff"
             android:layout_weight="0.50" />
 
         <Button android:id="@+id/buttonSignUp" style="?metaButtonBarButtonStyle"
@@ -34,7 +34,7 @@
             android:onClick="Next"
             android:layout_weight="0.5"
             android:background="@drawable/border"
-            android:textColor="#ff026b6c" />
+            android:textColor="#ffffff" />
 
     </LinearLayout>
 
