@@ -145,7 +145,7 @@ public class ChatXMPPService extends Service {
 
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo_notif);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.losobo_notif);
 
         Intent chatIntent = new Intent(getApplicationContext(), ChatActivity.class);
         chatIntent.putExtra("ChatId", chatChatId);
@@ -185,7 +185,7 @@ public class ChatXMPPService extends Service {
 
             Notification mBuilder =
                     new NotificationCompat.Builder(getApplicationContext())
-                            .setSmallIcon(R.drawable.logo_notif)
+                            .setSmallIcon(R.drawable.losobo_notif)
                             .setLargeIcon(bitmap)
                             .setContentTitle("Chat Notification")
                             .setContentIntent(pendingIntent)

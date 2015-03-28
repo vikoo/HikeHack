@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Welcome to TeachMate. Please enter the following details to register to our services!"
+        android:text="Welcome to LoSoBo. Please enter the following details to register to our services!"
         android:id="@+id/textView12"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
