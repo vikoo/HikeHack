@@ -33,6 +33,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.teachmate.teachmate.Chat.ChatActivity;
 import com.teachmate.teachmate.DBHandlers.ChatIdMapDBHandler;
 import com.teachmate.teachmate.DBHandlers.ChatInfoDBHandler;
+import com.teachmate.teachmate.DBHandlers.DeviceInfoDBHandler;
 import com.teachmate.teachmate.models.ChatIdMap;
 import com.teachmate.teachmate.models.ChatInfo;
 
@@ -152,7 +153,15 @@ public class GcmIntentService extends IntentService {
 
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                 // Post notification of received message.
-                sendNotification("Received: " + extras.toString());
+                String info = "";
+                try {
+                    info = DeviceInfoDBHandler.GetValueForKey(getApplication().getApplicationContext(), "DND");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                //if(!info.equals("true")){
+                    sendNotification("Received: " + extras.toString());
+                //}
                 Log.i(TAG, "Received: " + extras.toString());
             }
         }
@@ -166,7 +175,7 @@ public class GcmIntentService extends IntentService {
     private void sendNotification(String msg) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.hike);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.notif_icon_big);
 
 
         if (intType == 2) {
@@ -187,7 +196,7 @@ public class GcmIntentService extends IntentService {
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.losobo_notif)
+                            .setSmallIcon(R.drawable.notif_icon)
                             .setLargeIcon(bitmap)
                             .setContentTitle("New Answer")
                             .setStyle(new NotificationCompat.BigTextStyle()
@@ -207,7 +216,7 @@ public class GcmIntentService extends IntentService {
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.losobo_notif)
+                            .setSmallIcon(R.drawable.notif_icon)
                             .setLargeIcon(bitmap)
                             .setContentTitle("New Request")
                             .setStyle(new NotificationCompat.BigTextStyle()
@@ -233,7 +242,7 @@ public class GcmIntentService extends IntentService {
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.losobo_notif)
+                            .setSmallIcon(R.drawable.notif_icon)
                             .setContentTitle("New Response")
                             .setLargeIcon(bitmap)
                             .setStyle(new NotificationCompat.BigTextStyle()
@@ -282,7 +291,7 @@ public class GcmIntentService extends IntentService {
 
             Notification mBuilder =
                     new NotificationCompat.Builder(getApplicationContext())
-                            .setSmallIcon(R.drawable.losobo_notif)
+                            .setSmallIcon(R.drawable.notif_icon)
                             .setLargeIcon(bitmap)
                             .setContentTitle("Chat Notification")
                             .setContentIntent(pendingIntent)

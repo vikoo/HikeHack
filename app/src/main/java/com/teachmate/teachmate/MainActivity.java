@@ -381,7 +381,9 @@ public class MainActivity extends ActionBarActivity
     };
 
     void doBindService() {
-        startService(new Intent(getApplication(), ChatXMPPService.class));
+        if(!ChatXMPPService.isRunning) {
+            startService(new Intent(getApplication(), ChatXMPPService.class));
 //        bindService(new Intent(this, ChatXMPPService.class), mConnection, Context.BIND_AUTO_CREATE);
+        }
     }
 }

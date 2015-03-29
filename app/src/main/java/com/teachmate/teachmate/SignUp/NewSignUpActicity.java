@@ -4,20 +4,18 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -46,6 +44,8 @@ public class NewSignUpActicity extends ActionBarActivity {
                     .addToBackStack(null)
                     .commit();
         }
+
+        this.setTitle("Sign Up!");
 
         progressDialog = new ProgressDialog(NewSignUpActicity.this);
         progressDialog.setCancelable(false);

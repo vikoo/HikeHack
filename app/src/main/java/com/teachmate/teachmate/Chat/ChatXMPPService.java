@@ -6,8 +6,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
@@ -137,6 +135,7 @@ public class ChatXMPPService extends Service {
 
         } catch (JSONException e) {
             e.printStackTrace();
+            return;
         }
         if(mHandler !=null && mReceiverId!=null && mReceiverId.equals(chatSenderId)){
             mHandler.obtainMessage(ChatActivity.MESSAGE_WRITE, -1, -1, chatMessage.getBytes())
@@ -145,7 +144,7 @@ public class ChatXMPPService extends Service {
 
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.losobo_notif);
+        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.notif_icon_big);
 
         Intent chatIntent = new Intent(getApplicationContext(), ChatActivity.class);
         chatIntent.putExtra("ChatId", chatChatId);
@@ -185,8 +184,8 @@ public class ChatXMPPService extends Service {
 
             Notification mBuilder =
                     new NotificationCompat.Builder(getApplicationContext())
-                            .setSmallIcon(R.drawable.losobo_notif)
-                            .setLargeIcon(bitmap)
+                            .setSmallIcon(R.drawable.notif_icon)
+                            //.setLargeIcon(bitmap)
                             .setContentTitle("Chat Notification")
                             .setContentIntent(pendingIntent)
                             .setStyle(new NotificationCompat.BigTextStyle()

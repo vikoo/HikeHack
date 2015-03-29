@@ -325,7 +325,7 @@ public class RequestsDisplayActivity extends Fragment {
                         else{
                             newRequestString = requestEditText.getText().toString();
                             //if(spinner1.getSelectedItem().toString().equals("Registered Locations")){
-                            if(locationSwicth.isChecked()){
+                            if(!locationSwicth.isChecked()){
                                 isCurrentLocation = false;
                             }
                             else{

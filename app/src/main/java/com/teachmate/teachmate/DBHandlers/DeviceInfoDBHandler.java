@@ -33,8 +33,31 @@ public class DeviceInfoDBHandler {
     }
 
     public static void InsertOrUpdate(Context context, DeviceInfoModel deviceInfoModel){
-        try{
+        try {
+            dbHelper = new DbHelper(context.getApplicationContext());
+            db = dbHelper.getWritableDatabase();
 
+            DeviceInfoModel deviceInfo = new DeviceInfoModel();
+
+            Cursor c = db.rawQuery("Select * from " + DbTableStrings.TABLE_NAME_DEVICE_INFO + " where " + DbTableStrings.KEY + " = '" + deviceInfoModel.Key + "'", null);
+            if (c != null) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DbTableStrings.VALUE, deviceInfo.Value);
+
+                boolean b = db.update(DbTableStrings.TABLE_NAME_DEVICE_INFO, contentValues, DbTableStrings.KEY + "= '" + deviceInfoModel.Key + "'", null) > 0;
+
+                Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+            } else {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DbTableStrings.KEY, deviceInfoModel.Key);
+                contentValues.put(DbTableStrings.VALUE, deviceInfoModel.Value);
+
+                dbHelper = new DbHelper(context);
+                db = dbHelper.getWritableDatabase();
+                db.insert(DbTableStrings.TABLE_NAME_DEVICE_INFO, null, contentValues);
+
+                Toast.makeText(context, "New Inserted", Toast.LENGTH_SHORT).show();
+            }
         }catch(Exception e){
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
